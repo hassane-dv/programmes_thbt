@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tri de Liste</title>
+    <style>
+        button {
+            padding: 6px 15px;
+            color: #f1f1f1;
+            background-color: orange;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: rgba(255, 166, 0, 0.842);
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px 10px;
+            margin: 2px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Tri de Liste</h2>
+
+<p>Cliquez sur un bouton pour trier la liste :</p>
+
+
+<!-- Boutons du programme -->
+<button onclick="sortList('date')">Trier par Date</button>
+<button onclick="sortList('alpha')">Trier par Ordre Alphabétique</button>
+
+
+<!-- liste à trier -->
+<ul id="myList">
+    <li>Banane - 2020-01-01</li>
+    <li>Pomme - 2021-02-15</li>
+    <li>Orange - 2022-03-10</li>
+    <li>Raisin - 2022-04-05</li>
+    <li>Abricot - 2022-05-20</li>
+    <li>Fromage - 2024-01-13</li>
+    <li>Noix - 2023-08-11</li>
+    <li>Jus - 1994-07-24</li>
+    <li>Tomate - 2024-01-05</li>
+    <li>Citron - 2021-04-20</li>
+</ul>
+
+<script>
+
+    //fonction qui prend en paramètre le critère choisi par l'utilisateur
+    function sortList(criteria) {
+        //variables
+        let list, items, switching, i, x, y, shouldSwitch;
+        // récupére la liste
+        list = document.getElementById("myList");
+        switching = true;
+
+        // boucle tant que switching est vrai, récupére les éléments de la liste 
+        while (switching) {
+            switching = false;
+            items = list.getElementsByTagName("LI");
+
+            // boucle POUR imbriquer dans WHILE pour le tri
+            for (i = 0; i < (items.length - 1); i++) {
+                shouldSwitch = false;
+                x = items[i].innerText.toLowerCase();
+                y = items[i + 1].innerText.toLowerCase();
+
+                if (criteria === 'date') {
+                    x = new Date(x.split(" - ")[1]);
+                    y = new Date(y.split(" - ")[1]);
+                }
+
+                if (x > y) {
+                    shouldSwitch= true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                items[i].parentNode.insertBefore(items[i + 1], items[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
